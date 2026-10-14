@@ -8,6 +8,10 @@
     "build": "next build",
     "start": "next start"
   },
+  "author": {
+    "name": "Nwachukwu Goodness",
+    "email": "goodyc474@gmail.com"
+  },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "@vercel/analytics": "1.6.1",
