@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, type CSSProperties } from 'react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { LEGENDARY_MUSICIANS } from '@/lib/musicians'
 import { textOn } from '@/lib/archive'
@@ -19,7 +19,11 @@ const LAST_YEAR = Math.max(...YEARS)
 // Default to Fela — the brief's reference specimen.
 const INITIAL = Math.max(0, RECORDS.findIndex((r) => r.id === 'fela-kuti'))
 
-export function Hero() {
+type HeroProps = {
+  isEntranceTriggered?: boolean
+}
+
+export function Hero({ isEntranceTriggered = true }: HeroProps) {
   const [active, setActive] = useState(INITIAL)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
@@ -67,6 +71,58 @@ export function Hero() {
     }
   }, [active, isGlobalPlaying, audioOrigin, playTrack, record])
 
+  const reduceMotion = useReducedMotion()
+
+  const mechanicalEase = [0.16, 1, 0.3, 1] as const
+
+  const editorialStagger = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  }
+
+  const maskLine = {
+    hidden: { y: '115%', opacity: 0 },
+    show: {
+      y: '0%',
+      opacity: 1,
+      transition: {
+        duration: 0.85,
+        ease: mechanicalEase,
+      },
+    },
+  }
+
+  const stampImpression = {
+    hidden: { scale: 1.1, opacity: 0, y: -6 },
+    show: {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.45,
+        ease: mechanicalEase,
+      },
+    },
+  }
+
+  const mechanicalFadeUp = {
+    hidden: { opacity: 0, y: 24 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.7,
+        ease: mechanicalEase,
+      },
+    },
+  }
+
   const themeVars = {
     '--accent-color': record.accentColor,
     '--accent-ink': textOn(record.accentColor),
@@ -91,38 +147,65 @@ export function Hero() {
           </p>
 
           <div className="relative z-10 flex flex-col lg:col-span-7">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b-2 border-ink pb-3 font-mono text-[11px] uppercase tracking-[0.2em] sm:text-xs">
+            <motion.div
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
+              animate={isEntranceTriggered ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
+              transition={{ duration: 0.5, ease: mechanicalEase, delay: 0.05 }}
+              className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b-2 border-ink pb-3 font-mono text-[11px] uppercase tracking-[0.2em] sm:text-xs"
+            >
               <span className="bg-ink px-2 py-1 text-paper">Vol. I</span>
               <span>Sonic Architecture</span>
               <span aria-label={`${FIRST_YEAR} to ${LAST_YEAR}`}>
                 {FIRST_YEAR} → {LAST_YEAR}
               </span>
               <span className="text-ink-soft">6.5244° N, 3.3792° E</span>
-            </div>
+            </motion.div>
 
             <h1
               id="hero-title"
               className="mt-8 font-serif text-[clamp(3.4rem,8.6vw,13.5rem)] font-black uppercase leading-[0.84] tracking-[-0.035em] [word-spacing:0.14em] [font-variation-settings:'opsz'_144,'SOFT'_30]"
             >
-              <span className="block">The pulse</span>
-              <span className="block pl-[0.6em]">of the</span>
-              <span className="mt-2 inline-flex items-baseline gap-4">
-                <span className="relative inline-block bg-specimen px-[0.12em] pb-[0.06em] lowercase italic text-on-specimen transition-colors duration-500 [font-variation-settings:'opsz'_144,'SOFT'_100,'WONK'_1]">
-                  soil.
-                </span>
-                <span
-                  aria-hidden
-                  className="hidden font-mono text-xs font-normal normal-case tracking-[0.18em] sm:inline"
+              <span className="block overflow-hidden pb-1">
+                <motion.span
+                  initial={reduceMotion ? { opacity: 0 } : { y: '115%', opacity: 0 }}
+                  animate={isEntranceTriggered ? { y: '0%', opacity: 1 } : { y: '115%', opacity: 0 }}
+                  transition={{ duration: 0.85, ease: mechanicalEase, delay: 0.12 }}
+                  className="block"
                 >
-                  fig. {record.index}
-                </span>
+                  The pulse
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden pb-1 pl-[0.6em]">
+                <motion.span
+                  initial={reduceMotion ? { opacity: 0 } : { y: '115%', opacity: 0 }}
+                  animate={isEntranceTriggered ? { y: '0%', opacity: 1 } : { y: '115%', opacity: 0 }}
+                  transition={{ duration: 0.85, ease: mechanicalEase, delay: 0.24 }}
+                  className="block"
+                >
+                  of the
+                </motion.span>
+              </span>
+              <span className="mt-2 inline-flex items-baseline gap-4 overflow-hidden pt-1">
+                <motion.span
+                  initial={reduceMotion ? { opacity: 0 } : { scale: 1.15, opacity: 0, y: -8 }}
+                  animate={isEntranceTriggered ? { scale: 1, opacity: 1, y: 0 } : { scale: 1.15, opacity: 0, y: -8 }}
+                  transition={{ duration: 0.5, ease: mechanicalEase, delay: 0.38 }}
+                  className="relative inline-block bg-specimen px-[0.12em] pb-[0.06em] lowercase italic text-on-specimen transition-colors duration-500 [font-variation-settings:'opsz'_144,'SOFT'_100,'WONK'_1]"
+                >
+                  soil.
+                </motion.span>
               </span>
             </h1>
 
             {/* Midsection: Editorial Description, Archival Quote & Interactive Turntable Deck */}
             <div className="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-12 gap-y-8 md:gap-x-6 lg:gap-x-8 xl:gap-x-10 items-center">
               {/* Description & Archival Quote Column */}
-              <div className="md:col-span-7 xl:col-span-7 flex flex-col gap-6 sm:gap-7">
+              <motion.div
+                initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+                animate={isEntranceTriggered ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                transition={{ duration: 0.7, ease: mechanicalEase, delay: 0.3 }}
+                className="md:col-span-7 xl:col-span-7 flex flex-col gap-6 sm:gap-7"
+              >
                 <p className="max-w-[34ch] text-pretty font-serif text-lg sm:text-xl xl:text-2xl leading-snug">
                   Documenting the sonic architecture of Nigeria. A digital museum of Highlife, Afrobeat, and
                   Afro-Jùjú.
@@ -138,10 +221,15 @@ export function Hero() {
                     — {record.quoteAttribution}
                   </figcaption>
                 </figure>
-              </div>
+              </motion.div>
 
               {/* Interactive Vinyl Record & Analog Audiophile Tonearm Column */}
-              <div className="md:col-span-5 xl:col-span-5 flex justify-center md:justify-end py-2 sm:py-4 md:py-0">
+              <motion.div
+                initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9, rotate: -6 }}
+                animate={isEntranceTriggered ? { opacity: 1, scale: 1, rotate: 0 } : { opacity: 0, scale: 0.9, rotate: -6 }}
+                transition={{ duration: 0.85, ease: mechanicalEase, delay: 0.35 }}
+                className="md:col-span-5 xl:col-span-5 flex justify-center md:justify-end py-2 sm:py-4 md:py-0"
+              >
                 <div
                   className="group/turntable relative aspect-square w-52 sm:w-60 md:w-56 lg:w-64 xl:w-72 2xl:w-80 cursor-pointer select-none transition-transform duration-300 hover:scale-[1.02]"
                   onClick={togglePlay}
@@ -312,10 +400,15 @@ export function Hero() {
                     {isPlaying ? 'Now playing sample' : 'Click to drop needle'}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
-            <div className="mt-auto flex flex-wrap items-center gap-x-8 gap-y-5 pt-12">
+            <motion.div
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              animate={isEntranceTriggered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, ease: mechanicalEase, delay: 0.55 }}
+              className="mt-auto flex flex-wrap items-center gap-x-8 gap-y-5 pt-12"
+            >
               <a
                 href="#exhibitions"
                 className="group/cta relative inline-flex items-center border-2 border-ink bg-ink px-6 py-4 font-mono text-sm font-semibold uppercase tracking-[0.22em] text-paper shadow-[6px_6px_0_0_var(--accent-color)] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[10px_10px_0_0_var(--accent-color)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:text-base"
@@ -333,10 +426,13 @@ export function Hero() {
                 <br />
                 Verified against primary pressings
               </p>
-            </div>
+            </motion.div>
           </div>
 
-          <div
+          <motion.div
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 28 }}
+            animate={isEntranceTriggered ? { opacity: 1, x: 0 } : { opacity: 0, x: 28 }}
+            transition={{ duration: 0.85, ease: mechanicalEase, delay: 0.2 }}
             className="relative flex flex-col lg:col-span-5 lg:-ml-6 xl:-ml-10"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -398,7 +494,7 @@ export function Hero() {
                 <ArrowRight aria-hidden className="size-4" />
               </button>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         <ArchiveMarquee />

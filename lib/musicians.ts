@@ -262,7 +262,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
       heroImg:
         "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTK57_3ufHfC6fX8J-u8TwiEkMMu3aX0at-jOqinEfNpVR3ctlQdaGTi4KCbbm8ZWi1NHUwqQZp526op3s",
       stageImg:
-        "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjlgiPRR_Dmn7T_uDCoOvzeSv_GN7aMWgkgE-kMl5clW1ECwwOCFhE9GM&s=10",
       duotoneImg:
         "https://images.unsplash.com/photo-1470229722913-7c090be5c5a4?q=80&w=800&auto=format&fit=crop",
       newsHeadline: "THE RENAISSANCE • ENUGU 1984",
@@ -295,7 +295,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
       heroImg:
         "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSrm0-8L_oYm6tWuKtBPamXsYSmIO7Mban3_7TGCOGaCq34o4QWF0AC0v73P6JwApPljrwiLOYgXzwQ7x4",
       stageImg:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Onyeka_Onwenu_in_2014.jpg/800px-Onyeka_Onwenu_in_2014.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiAGO1sZbpupt6zhtTw1g-By9PsejY3eo-791Fgb1NBw&s=10",
       duotoneImg:
         "https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?q=80&w=800&auto=format&fit=crop",
       newsHeadline: "THE GUARDIAN • LAGOS 1986",
@@ -328,11 +328,11 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     audio: "/audio/094 2 FACE - AFRICAN QUEEN.mp3",
     collage: {
       heroImg:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2face_Idibia_2010.jpg/800px-2face_Idibia_2010.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpPdiGt6Sk-_3bw5qCenOaDtQMFFdU19Rhp3LzigG5mg&s=10",
       stageImg:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2face_Idibia_2010.jpg/800px-2face_Idibia_2010.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpPdiGt6Sk-_3bw5qCenOaDtQMFFdU19Rhp3LzigG5mg&s=10",
       duotoneImg:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2face_Idibia_2010.jpg/800px-2face_Idibia_2010.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpPdiGt6Sk-_3bw5qCenOaDtQMFFdU19Rhp3LzigG5mg&s=10",
       newsHeadline: "THE NATION • LAGOS 2004",
       newsSnippet:
         "AFRICAN QUEEN TAKES THE WORLD BY STORM: DEBUT SOLO ALBUM 'FACE 2 FACE' REDEFINES CONTEMPORARY AFRICAN POP MUSIC.",

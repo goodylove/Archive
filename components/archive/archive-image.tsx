@@ -21,11 +21,17 @@ export function ArchiveImage({ src, fallbackSrc, alt, className, priority }: Arc
     if (img && img.complete && img.naturalWidth === 0) setFailed(true)
   }, [])
 
+  const effectiveSrc = (!src || src.trim() === '' || failed) ? fallbackSrc : src
+
+  if (!effectiveSrc || effectiveSrc.trim() === '') {
+    return <div className={cn('h-full w-full bg-paper-dark/20', className)} aria-hidden />
+  }
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       ref={ref}
-      src={failed ? fallbackSrc : src}
+      src={effectiveSrc}
       alt={alt}
       referrerPolicy="no-referrer"
       loading={priority ? 'eager' : 'lazy'}

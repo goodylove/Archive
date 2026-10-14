@@ -34,7 +34,7 @@ export function SpecimenCard({ record, total, isPlaying, onTogglePlay }: Specime
         </div>
       </div> */}
 
-      <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence mode="wait">
         <motion.article
           key={record.id}
           aria-labelledby="specimen-name"

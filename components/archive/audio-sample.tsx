@@ -53,27 +53,29 @@ export function AudioSample({
           {playing ? <Pause className="size-3 sm:size-3.5" aria-hidden /> : <Play className="size-3 sm:size-3.5" aria-hidden />}
         </span>
         <span>
-          {playing ? 'Pause' : 'Play'} sample
+          {playing ? 'Pause' : 'Play'}
           <span className="sr-only">{` of ${track}`}</span>
         </span>
       </button>
-      <audio
-        ref={audioRef}
-        src={src}
-        preload="none"
-        onPlay={() => {
-          setInternalPlaying(true)
-          onPlayChange?.(true)
-        }}
-        onPause={() => {
-          setInternalPlaying(false)
-          onPlayChange?.(false)
-        }}
-        onEnded={() => {
-          setInternalPlaying(false)
-          onPlayChange?.(false)
-        }}
-      />
+      {src && src.trim() !== '' ? (
+        <audio
+          ref={audioRef}
+          src={src}
+          preload="none"
+          onPlay={() => {
+            setInternalPlaying(true)
+            onPlayChange?.(true)
+          }}
+          onPause={() => {
+            setInternalPlaying(false)
+            onPlayChange?.(false)
+          }}
+          onEnded={() => {
+            setInternalPlaying(false)
+            onPlayChange?.(false)
+          }}
+        />
+      ) : null}
     </>
   )
 }

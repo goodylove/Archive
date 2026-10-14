@@ -1,0 +1,37 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Vinyl Platter Base with Rich Rim -->
+  <circle cx="64" cy="64" r="62" fill="#0C0B0A" stroke="#2B2824" stroke-width="2.5" />
+  
+  <!-- Outer Run-In Groove -->
+  <circle cx="64" cy="64" r="56" fill="none" stroke="#1F1D1A" stroke-width="1.5" />
+  
+  <!-- Microgroove Grooves Cluster -->
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#262320" stroke-width="1.2" />
+  <circle cx="64" cy="64" r="45" fill="none" stroke="#1B1917" stroke-width="1" />
+  <circle cx="64" cy="64" r="40" fill="none" stroke="#262320" stroke-width="1.2" />
+  <circle cx="64" cy="64" r="35" fill="none" stroke="#1B1917" stroke-width="1" />
+  <circle cx="64" cy="64" r="31" fill="none" stroke="#24211E" stroke-width="1.2" />
+
+  <!-- Specular Light Sheen (Analog Vinyl Reflection) -->
+  <path d="M 28 36 A 48 48 0 0 1 56 18" stroke="#3A3631" stroke-width="3" stroke-linecap="round" opacity="0.75" />
+  <path d="M 100 92 A 48 48 0 0 1 72 110" stroke="#3A3631" stroke-width="3" stroke-linecap="round" opacity="0.75" />
+
+  <!-- Center Label: Archival Museum Paper with Wax-Stamp Crimson Rim -->
+  <circle cx="64" cy="64" r="24" fill="#F3ECDD" stroke="#C82A2A" stroke-width="3.5" />
+  <circle cx="64" cy="64" r="20" fill="none" stroke="#C82A2A" stroke-width="1" stroke-dasharray="2.5 2.5" opacity="0.6" />
+
+  <!-- Center Archival Lettermark 'A' (Precision Serif Geometry) -->
+  <path
+    d="M64 47.5 L56 68.5 H59.5 L61.5 63 H66.5 L68.5 68.5 H72 L64 47.5 Z M64 54.5 L65.5 60 H62.5 L64 54.5 Z"
+    fill="#121110"
+  />
+
+  <!-- Brass Spindle Bushing -->
+  <circle cx="64" cy="64" r="4.5" fill="#C82A2A" />
+  <circle cx="64" cy="64" r="2.8" fill="#121110" />
+
+  <!-- Stylus Needle Indicator at Outer Groove -->
+  <circle cx="108" cy="42" r="3.5" fill="#D45D3A" stroke="#121110" stroke-width="1.5" />
+  <path d="M108 42 L118 32" stroke="#D45D3A" stroke-width="2" stroke-linecap="round" />
+</svg>
+
