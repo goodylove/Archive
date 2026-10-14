@@ -169,13 +169,6 @@ export function CassetteTransport({
           </div>
         </div>
       </div>
-
-      {/* Controlled Master Audio Element */}
-      <audio
-        src={record.audio}
-        autoPlay={isPlaying}
-        onEnded={onStop}
-      />
     </motion.aside>
   )
 }

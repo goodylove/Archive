@@ -32,7 +32,7 @@ export function VinylTonearm({
         }
       }}
       aria-label={`Vinyl record for ${record.name}: ${record.hitTrack}. Click to toggle playback.`}
-      title={onTogglePlay ? (isPlaying ? 'Pause sample' : 'Play sample') : undefined}
+      title={onTogglePlay ? (isPlaying ? 'Pause ' : 'Play') : undefined}
     >
       {/* Vinyl Disc Platter */}
       <div
@@ -115,8 +115,8 @@ export function VinylTonearm({
               reduceMotion
                 ? undefined
                 : {
-                    rotate: isPlaying ? 5.5 : 0,
-                  }
+                  rotate: isPlaying ? 5.5 : 0,
+                }
             }
             transition={{ type: 'spring', stiffness: 140, damping: 16 }}
             style={{ transformOrigin: '118px 36px' }}

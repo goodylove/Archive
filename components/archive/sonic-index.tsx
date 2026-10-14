@@ -18,6 +18,7 @@ import { ArchiveImage } from './archive-image'
 import { fallbackImage, textOn } from '@/lib/archive'
 import { PolyRhythmEqualizer } from './poly-rhythm-equalizer'
 import { CassetteTransport } from './cassette-transport'
+import { useArchiveAudio } from './audio-context'
 
 type SortField = 'year' | 'bpm' | 'index' | 'name'
 type SortOrder = 'asc' | 'desc'
@@ -27,8 +28,10 @@ export function SonicIndex() {
   const [sortField, setSortField] = useState<SortField>('year')
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc')
   const [selectedDecade, setSelectedDecade] = useState('All')
-  const [playingId, setPlayingId] = useState<string | null>(null)
   const [hoveredMusician, setHoveredMusician] = useState<MusicianRecord | null>(null)
+
+  const { activeTrack, activeTrackId, isPlaying, toggleTrack, stopTrack } = useArchiveAudio()
+  const playingId = activeTrackId
 
   // Filter & sort entries
   const processedRecords = useMemo(() => {
@@ -82,7 +85,10 @@ export function SonicIndex() {
   }
 
   function toggleAudio(id: string) {
-    setPlayingId((curr) => (curr === id ? null : id))
+    const musician = LEGENDARY_MUSICIANS.find((m) => m.id === id)
+    if (musician) {
+      toggleTrack(musician, 'index')
+    }
   }
 
   return (
@@ -489,12 +495,12 @@ export function SonicIndex() {
         {/* Global Row Audio Player (Active when playing) */}
         {/* Analog Cassette Master Transport Drawer with Latch Spring & Click Shake */}
         <AnimatePresence>
-          {playingId && (
+          {playingId && activeTrack && (
             <CassetteTransport
-              record={LEGENDARY_MUSICIANS.find((m) => m.id === playingId) || null}
-              isPlaying={true}
-              onTogglePlay={() => toggleAudio(playingId)}
-              onStop={() => setPlayingId(null)}
+              record={activeTrack}
+              isPlaying={isPlaying}
+              onTogglePlay={() => toggleTrack(activeTrack, 'index')}
+              onStop={stopTrack}
             />
           )}
         </AnimatePresence>

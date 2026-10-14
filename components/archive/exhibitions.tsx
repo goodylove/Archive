@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Disc, Play, Pause, ArrowUpRight, Filter, MapPin } from 'lucide-react'
 import { LEGENDARY_MUSICIANS, type MusicianRecord } from '@/lib/musicians'
 import { DossierCard } from './dossier-card'
+import { useArchiveAudio } from './audio-context'
 
 const DECADES = ['All', '1960s', '1970s', '1980s']
 const GENRES = ['All Genres', 'Afrobeat', 'Highlife', 'Afro-Jùjú', 'Roots Reggae']
@@ -50,7 +51,8 @@ const PRESSING_PLANTS = [
 export function Exhibitions() {
   const [selectedDecade, setSelectedDecade] = useState('All')
   const [selectedGenre, setSelectedGenre] = useState('All Genres')
-  const [playingId, setPlayingId] = useState<string | null>(null)
+  const { activeTrackId, toggleTrack } = useArchiveAudio()
+  const playingId = activeTrackId
 
   const filteredMusicians = LEGENDARY_MUSICIANS.filter((m) => {
     const matchesDecade = selectedDecade === 'All' || m.decade === selectedDecade
@@ -61,7 +63,10 @@ export function Exhibitions() {
   })
 
   function toggleAudio(id: string) {
-    setPlayingId((curr) => (curr === id ? null : id))
+    const musician = LEGENDARY_MUSICIANS.find((m) => m.id === id)
+    if (musician) {
+      toggleTrack(musician, 'exhibitions')
+    }
   }
 
   return (
@@ -187,16 +192,6 @@ export function Exhibitions() {
             ))}
           </AnimatePresence>
         </div>
-
-        {/* Global Audio Element for Exhibitions Section */}
-        {playingId && (
-          <audio
-            key={playingId}
-            src={LEGENDARY_MUSICIANS.find((m) => m.id === playingId)?.audio}
-            autoPlay
-            onEnded={() => setPlayingId(null)}
-          />
-        )}
 
         {/* Industrial Pressing Plants Directory */}
         <div className="mt-20 border-2 border-ink bg-paper-bright p-6 sm:p-8 lg:p-10">

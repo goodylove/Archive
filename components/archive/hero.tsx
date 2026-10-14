@@ -10,6 +10,8 @@ import { SiteNav } from './site-nav'
 import { SpecimenCard } from './specimen-card'
 import { ArchiveMarquee } from './archive-marquee'
 
+import { useArchiveAudio } from './audio-context'
+
 const RECORDS = LEGENDARY_MUSICIANS
 const YEARS = RECORDS.map((r) => r.releaseYear)
 const FIRST_YEAR = Math.min(...YEARS)
@@ -19,11 +21,20 @@ const INITIAL = Math.max(0, RECORDS.findIndex((r) => r.id === 'fela-kuti'))
 
 export function Hero() {
   const [active, setActive] = useState(INITIAL)
-  const [isPlaying, setIsPlaying] = useState(false)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
   const [isHovered, setIsHovered] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
   const record = RECORDS[active]
+
+  const {
+    activeTrackId,
+    isPlaying: isGlobalPlaying,
+    origin: audioOrigin,
+    playTrack,
+    toggleTrack,
+  } = useArchiveAudio()
+
+  // Turntable needle drops and vinyl platter spins ONLY when this specific record is playing
+  const isPlaying = isGlobalPlaying && activeTrackId === record.id
 
   const AUTO_ADVANCE_MS = 7000
   const spinSeconds = ((60 / record.bpm) * 8).toFixed(2)
@@ -42,29 +53,19 @@ export function Hero() {
   }, [isAutoPlay, isPlaying, isHovered, active])
 
   const togglePlay = () => {
-    const audio = audioRef.current
-    if (!audio) return
-    if (audio.paused) {
-      audio.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false))
-    } else {
-      audio.pause()
-      setIsPlaying(false)
-    }
+    toggleTrack(record, 'hero')
   }
 
-  // Switch audio track seamlessly when active specimen changes
+  // Switch audio track seamlessly when active specimen changes IF Hero was actively playing
   const prevActiveRef = useRef(active)
   useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
     if (prevActiveRef.current !== active) {
       prevActiveRef.current = active
-      if (isPlaying) {
-        audio.load()
-        audio.play().catch(() => setIsPlaying(false))
+      if (isGlobalPlaying && audioOrigin === 'hero') {
+        playTrack(record, 'hero')
       }
     }
-  }, [active, isPlaying])
+  }, [active, isGlobalPlaying, audioOrigin, playTrack, record])
 
   const themeVars = {
     '--accent-color': record.accentColor,
@@ -74,21 +75,6 @@ export function Hero() {
   return (
     <div style={themeVars} className="flex min-h-[80vh] flex-col overflow-x-clip">
       <SiteNav />
-
-      {/* Global Background Audio Element */}
-      <audio
-        ref={audioRef}
-        src={record.audio}
-        preload="none"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => {
-          setIsPlaying(false)
-          if (isAutoPlay) {
-            setActive((i) => (i + 1) % RECORDS.length)
-          }
-        }}
-      />
 
       <main className="relative flex flex-1 flex-col">
         <section

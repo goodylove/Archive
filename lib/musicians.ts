@@ -58,7 +58,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#D48C1C", // Ochre Gold
     secondaryColor: "#121110",
     badgeText: "AFRO-JÙJÚ ARCHIVE // SPECIMEN 01",
-    audio: "/audio/",
+    audio: "/audio/shena peters_Ijo-Shina.mp3.mpeg",
     collage: {
       heroImg:
         "https://cdn.vanguardngr.com/wp-content/uploads/2015/08/Shina-Peters-2.gif",
@@ -91,7 +91,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#B8860B", // Dark Goldenrod
     secondaryColor: "#2A1810",
     badgeText: "OGENE SOUNDS // SPECIMEN 02",
-    audio: "https://samplelib.com/mp3/sample-6s.mp3",
+    audio: "/audio/oliver de couqe_ money Identity.mp3",
     collage: {
       heroImg:
         "https://www.inlandtown.com/wp-content/uploads/2021/05/Olive-de-Coque1-scaled.jpg",
@@ -124,7 +124,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#1B4332", // Forest Emerald
     secondaryColor: "#D48C1C",
     badgeText: "JUJU CANON // SPECIMEN 03",
-    audio: "https://samplelib.com/mp3/sample-6s.mp3",
+    audio: "/audio/King Sunny Ade - Ja Funmi.mp3",
     collage: {
       heroImg:
         "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcRWQNG14s8bH5W5CofFugFN2znHpe869s3-SyRgLeZU7p3qas1Aj6GqN8vwPN5hJ8wjvqlxGs4EhnnA8zs",
@@ -157,7 +157,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#8B4513", // Antique Bronze
     secondaryColor: "#1A2536",
     badgeText: "BRONZE ARCHIVE // SPECIMEN 04",
-    audio: "/audio/",
+    audio: "/audio/10 Sir Victor Uwaifo - Joromi 2.mp3",
     collage: {
       heroImg:
         "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcT4hj7yJkPomMCOzESeXig2MaUhr9eafrUNoS33DCSGOTA1flBMnTD6R50wvwoQqqTkj9ErMP4SOtq0BrE",
@@ -190,7 +190,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#C82A2A", // Reggae Red
     secondaryColor: "#1B4332",
     badgeText: "REGGAE REPOSITORIES // SPECIMEN 05",
-    audio: "https://samplelib.com/mp3/sample-6s.mp3",
+    audio: "/audio/Majek Fashek - Send Down the Rain.mp3",
     collage: {
       heroImg:
         "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcToTQ2wMCdomsib9niJSaiyiExxdnQ7kDG1rGseMWLlEPkZBayrd1z537LkZSGaKHgbh6WAIpiCvtnwxXs",
@@ -223,7 +223,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#C82A2A", // Radical Crimson
     secondaryColor: "#3D2314",
     badgeText: "KALAKUTA REPOSITORY // SPECIMEN 06",
-    audio: "https://samplelib.com/mp3/sample-6s.mp3",
+    audio: "/audio/fela Roforofo-Fight.mp3",
     collage: {
       heroImg:
         "https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTQ7ZjvD1w8ZK2DTeMnf61Mzbd3dDUHWh24z2mGsX1YVkX0WA5XE4kbEXtgZJ_4ef25Ln5HLXL3rjd-4A4",
@@ -257,7 +257,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#C27D00", // Earthen Ochre
     secondaryColor: "#121110",
     badgeText: "HIGHLIFE ARCHIVE // SPECIMEN 07",
-    audio: "https://samplelib.com/mp3/sample-6s.mp3",
+    audio: "/audio/OSADEBE-OSANDI OWENDI .mp3",
     collage: {
       heroImg:
         "https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcTK57_3ufHfC6fX8J-u8TwiEkMMu3aX0at-jOqinEfNpVR3ctlQdaGTi4KCbbm8ZWi1NHUwqQZp526op3s",
@@ -290,7 +290,7 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#A62B2B", // Velvet Rose
     secondaryColor: "#3D2314",
     badgeText: "AFRO-POP HERITAGE // SPECIMEN 08",
-    audio: "https://samplelib.com/mp3/sample-6s.mp3",
+    audio: "/audio/Onyeka Onwenu - One Love.mp3",
     collage: {
       heroImg:
         "https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSrm0-8L_oYm6tWuKtBPamXsYSmIO7Mban3_7TGCOGaCq34o4QWF0AC0v73P6JwApPljrwiLOYgXzwQ7x4",
@@ -325,18 +325,18 @@ export const LEGENDARY_MUSICIANS: MusicianRecord[] = [
     accentColor: "#3B7A57", // Deep Mint / Navy-Green Fusion
     secondaryColor: "#111111",
     badgeText: "AFRO-POP ARCHIVE // SPECIMEN 09",
-    audio: "https://samplelib.com/mp3/sample-6s.mp3",
+    audio: "/audio/094 2 FACE - AFRICAN QUEEN.mp3",
     collage: {
       heroImg:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2face_Idibia_2010.jpg/800px-2face_Idibia_2010.jpg",
       stageImg:
-        "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2face_Idibia_2010.jpg/800px-2face_Idibia_2010.jpg",
       duotoneImg:
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/2face_Idibia_2010.jpg/800px-2face_Idibia_2010.jpg",
       newsHeadline: "THE NATION • LAGOS 2004",
       newsSnippet:
         "AFRICAN QUEEN TAKES THE WORLD BY STORM: DEBUT SOLO ALBUM 'FACE 2 FACE' REDEFINES CONTEMPORARY AFRICAN POP MUSIC.",
       tapeNote: '"african queen"',
     },
-  }
+  },
 ];
