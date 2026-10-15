@@ -397,7 +397,7 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
                       className="inline-block size-1.5 rounded-full mr-1.5 align-middle"
                       style={{ backgroundColor: isPlaying ? 'var(--accent-color)' : '#8a8073' }}
                     />
-                    {isPlaying ? 'Now playing sample' : 'Click to drop needle'}
+                    {isPlaying ? 'Now playing' : 'Click to drop needle'}
                   </div>
                 </div>
               </motion.div>
@@ -498,7 +498,6 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
         </section>
 
         <ArchiveMarquee />
-        {/* <SpecimenIndex records={RECORDS} activeIndex={active} onSelect={setActive} /> */}
       </main>
     </div>
   )

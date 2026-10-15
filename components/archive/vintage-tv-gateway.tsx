@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from 'motion/react'
 import { ArrowRight, Tv, Volume2, VolumeX, Power } from 'lucide-react'
 
 // YouTube video ID: M7rFzXUjsH0, starts at 10 seconds
-const YOUTUBE_VIDEO_ID = 'M7rFzXUjsH0'
+const YOUTUBE_VIDEO_ID = "F2epz22qOzM"
 const START_SECONDS = 10
+
 
 const MECHANICAL_EASE = [0.16, 1, 0.3, 1] as const
 
@@ -53,9 +54,8 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
   if (isDismissed) return null
 
   // YouTube embed URL with start=10 and autoplay
-  const embedUrl = `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=${
-    isMuted ? 1 : 0
-  }&start=${START_SECONDS}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=${isMuted ? 1 : 0
+    }&start=${START_SECONDS}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`
 
   return (
     <AnimatePresence>
@@ -227,11 +227,10 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
 
                 {/* 3. PHYSICAL POWER INDICATOR LED ON TV CHASSIS */}
                 <div
-                  className={`pointer-events-none absolute z-30 size-2 rounded-full transition-all duration-500 ${
-                    screenPowered
+                  className={`pointer-events-none absolute z-30 size-2 rounded-full transition-all duration-500 ${screenPowered
                       ? 'bg-[#39FF14] shadow-[0_0_10px_#39FF14,0_0_20px_#39FF14]'
                       : 'bg-[#C82A2A] opacity-75'
-                  }`}
+                    }`}
                   style={{
                     left: '37.8%',
                     bottom: '9.4%',
@@ -272,7 +271,7 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
 
           {/* BOTTOM TELEMETRY FOOTER */}
           <footer className="relative z-30 border-t border-white/10 pt-3 w-full max-w-5xl text-center text-[10px] uppercase tracking-[0.22em] text-[#8C806F]">
-            NATIONAL ANTHEM OF NIGERIA(1978 to 2024.)
+            NATIONAL ANTHEM OF NIGERIA 2024
           </footer>
         </motion.div>
       )}
