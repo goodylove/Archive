@@ -22,7 +22,6 @@ export const metadata: Metadata = {
   title: 'ARCHIVE — The Pulse of the Soil',
   description:
     'Documenting the sonic architecture of Nigeria. A digital museum of Highlife, Afrobeat, and Afro-Jùjú.',
-  generator: 'v0.app',
   icons: {
     icon: [
       { url: '/icon.svg', type: 'image/svg+xml' },
