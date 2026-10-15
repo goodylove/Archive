@@ -62,7 +62,7 @@ export function About() {
     <footer
       id="about"
       aria-labelledby="about-heading"
-      className="relative z-10 bg-paper py-16 sm:py-20 lg:py-24"
+      className="relative z-10 bg-paper py-16 sm:py-20 lg:py-24 scroll-mt-8"
     >
       <div className="mx-auto max-w-[2200px] px-5 sm:px-8 lg:px-12">
         {/* Curatorial Masthead */}
@@ -296,9 +296,10 @@ export function About() {
                 onClick={scrollToTop}
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
-                className="flex items-center gap-2 border-2 border-paper bg-paper text-ink px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] transition-colors hover:bg-transparent hover:text-paper cursor-pointer shadow-[3px_3px_0_0_#ffffff]"
+                aria-label="Return to turntable platter at top of museum"
+                className="flex items-center gap-2 border-2 border-paper bg-paper text-ink px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] transition-colors hover:bg-transparent hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper cursor-pointer shadow-[3px_3px_0_0_#ffffff]"
               >
-                <ArrowUp className="size-3.5" />
+                <ArrowUp className="size-3.5" aria-hidden="true" />
                 <span>Return to Platter</span>
               </motion.button>
               <p className="mt-3 font-mono text-[9px] uppercase tracking-[0.14em] text-paper/60">

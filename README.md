@@ -2,7 +2,7 @@
 ### *A Digital Museum of Nigerian Musical Architecture (1960 — Present)*
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.4-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.0-blue?style=for-the-badge&logo=react)](https://react.dev/)
+
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![Motion](https://img.shields.io/badge/Framer_Motion-motion%2Freact-FF0055?style=for-the-badge&logo=framer)](https://motion.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -44,11 +44,24 @@ Rejecting generic, floaty SaaS web aesthetics, the platform is engineered around
 - **Prime-Ratio Poly-Rhythmic Equalizer**: Live visualizer bars driven by West African poly-rhythmic delay ratios (`0.25x`, `0.5x`, `0.75x`, `1.33x`).
 - **Floating Cassette Player Drawer**: A sticky bottom audio transport drawer that slides up (`y: 100% → 0%`) with a mechanical frame shake mimicking a physical cassette latch click.
 
-### 5. The "Analog Groove Meter" (Scroll Stylus Tracker)
+### 5. The "Analog Groove Meter" & Interactive Stylus Jump Navigation
 - A fixed vertical groove meter mapped to total scroll depth via Framer Motion `useScroll` and `useTransform`.
 - Tracks your position like a phonograph needle traveling from the outer 12" lead-in rim down to the dead-wax run-out colophon (`XX% // 33⅓ RPM`).
+- **Interactive Section Jump**: Each concentric groove tick (`12" RIM`, `GROOVE 01`, `MID-DISC`, `INNER BAND`, `DEAD WAX`) is directly clickable with smooth scrolling, keyboard accessibility, and a quick back-to-top dead wax shortcut.
 
-### 6. The Master Audio Bus
+### 6. Natural Gesture & Scroll-Through Entry
+- Scrolling down (mousewheel, touchpad, touch swipe up on mobile, or PageDown/ArrowDown) smoothly passes through the vintage television gateway into the active museum exhibition.
+- An animated scroll indicator guides the user on arrival (`↓ Scroll down or press Enter to visit archive`).
+
+### 7. Accessibility Architecture (WCAG 2.1 AA Compliant)
+- **Accessible Skip Link**: Screen-reader and keyboard-friendly "Skip to main exhibition" link (`#main-content`).
+- **Full Keyboard Navigation**: Every interactive control (turntable platter, stylus ticks, filter matrix, audio sample buttons, cassette transport) responds cleanly to `Tab`, `Enter`, `Space`, and `Arrow` keys.
+- **Shortcuts**: `M` toggles TV audio, `Escape`/`Enter`/`Space`/`ArrowDown`/`PageDown` enters the museum.
+- **Screen Reader Announcements**: Semantic ARIA live regions (`aria-live="polite"`) announce track changes, TV status, and filter updates.
+- **Accessible Landmarks**: Strict semantic landmark hierarchy (`<main id="main-content">`, `<header>`, `<nav>`, `<aside>`, `<footer>`, `<section aria-labelledby>`).
+- **Reduced Motion Support**: Complete graceful fallback for users with vestibular sensitivities (`useReducedMotion` and `@media (prefers-reduced-motion)`).
+
+### 8. The Master Audio Bus
 - A unified global audio context ensures **only ONE audio stream ever plays site-wide**, automatically synchronizing playback states across the Hero Turntable, Dossier Cards, and Master Index.
 
 ---
@@ -154,8 +167,6 @@ pnpm start
 - Full keyboard navigation support (Enter / Space bar cued on the turntable deck and transport controls).
 - ARIA live regions and semantic headings across all museum ledgers.
 
----
 
-## ✦ License
-Curated and built as an educational and cultural tribute to Nigerian musical heritage. Audio recordings and imagery remain the property of their respective original copyright holders and estate foundations.
+
 

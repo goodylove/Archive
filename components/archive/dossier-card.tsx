@@ -193,7 +193,7 @@ export function DossierCard({ musician, isPlaying, onTogglePlay }: DossierCardPr
             transition={{ duration: 0.15, ease: MECHANICAL_EASE }}
             aria-label={`${isPlaying ? 'Pause' : 'Play'} master sample of ${musician.hitTrack}`}
             aria-pressed={isPlaying}
-            className={`absolute bottom-2.5 right-2.5 flex size-10 items-center justify-center border-2 border-ink shadow-[2px_2px_0_0_var(--ink)] cursor-pointer transition-colors ${
+            className={`absolute bottom-2.5 right-2.5 flex size-10 items-center justify-center border-2 border-ink shadow-[2px_2px_0_0_var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer transition-colors ${
               isPlaying
                 ? 'bg-ink text-paper'
                 : 'bg-paper-bright text-ink hover:bg-[#e7dcc6]'

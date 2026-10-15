@@ -132,10 +132,11 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
     <div style={themeVars} className="flex min-h-[80vh] flex-col overflow-x-clip">
       <SiteNav />
 
-      <main className="relative flex flex-1 flex-col">
+      <div className="relative flex flex-1 flex-col">
         <section
+          id="hero"
           aria-labelledby="hero-title"
-          className="relative mx-auto grid w-full max-w-[2200px] flex-1 grid-cols-1 gap-x-10 gap-y-14 px-5 pb-14 pt-8 sm:px-8 lg:grid-cols-12 lg:px-12 lg:pb-16 lg:pt-12"
+          className="relative mx-auto grid w-full max-w-[2200px] flex-1 grid-cols-1 gap-x-10 gap-y-14 px-5 pb-14 pt-8 sm:px-8 lg:grid-cols-12 lg:px-12 lg:pb-16 lg:pt-12 scroll-mt-6"
         >
           {/* Running spine: the active record's provenance, set like a book's edge. */}
           <p
@@ -448,6 +449,7 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
               <button
                 type="button"
                 onClick={() => go(-1)}
+                aria-label="Previous musician specimen"
                 className="inline-flex items-center gap-2 border-2 border-ink px-3 py-2 transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer"
               >
                 <ArrowLeft aria-hidden className="size-4" />
@@ -456,7 +458,7 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
 
               <div className="flex flex-col items-center gap-1.5">
                 <p aria-live="polite" className="text-center">
-                  <span className="sr-only">Now showing </span>
+                  <span className="sr-only">Now showing specimen </span>
                   {record.index} <span className="text-ink-soft">/ {String(RECORDS.length).padStart(2, '0')}</span>
                   <span className="sr-only">: {record.name}</span>
                 </p>
@@ -478,7 +480,9 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
                 <button
                   type="button"
                   onClick={() => setIsAutoPlay((a) => !a)}
-                  className="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-soft hover:text-ink transition-colors cursor-pointer"
+                  aria-label="Toggle automatic specimen slideshow"
+                  aria-pressed={isAutoPlay}
+                  className="font-mono text-[9px] uppercase tracking-[0.14em] text-ink-soft hover:text-ink focus-visible:outline-2 focus-visible:outline-ink transition-colors cursor-pointer"
                   title="Toggle automatic specimen slideshow"
                 >
                   {isAutoPlay ? (isHovered ? 'Paused' : isPlaying ? 'Playing' : 'Auto: On') : 'Auto: Off'}
@@ -488,6 +492,7 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
               <button
                 type="button"
                 onClick={() => go(1)}
+                aria-label="Next musician specimen"
                 className="inline-flex items-center gap-2 border-2 border-ink px-3 py-2 transition-colors hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer"
               >
                 Next
@@ -498,7 +503,7 @@ export function Hero({ isEntranceTriggered = true }: HeroProps) {
         </section>
 
         <ArchiveMarquee />
-      </main>
+      </div>
     </div>
   )
 }

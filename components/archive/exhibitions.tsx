@@ -73,7 +73,7 @@ export function Exhibitions() {
     <section
       id="exhibitions"
       aria-labelledby="exhibitions-heading"
-      className="relative z-10 border-b-2 border-ink bg-paper py-16 sm:py-20 lg:py-24"
+      className="relative z-10 border-b-2 border-ink bg-paper py-16 sm:py-20 lg:py-24 scroll-mt-8"
     >
       <div className="mx-auto max-w-[2200px] px-5 sm:px-8 lg:px-12">
         {/* Curatorial Header */}
@@ -131,9 +131,9 @@ export function Exhibitions() {
 
           {/* Interactive Filter Matrix */}
           <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t-2 border-ink pt-6">
-            <div className="flex flex-wrap items-center gap-2">
+            <div role="tablist" aria-label="Filter specimens by decade" className="flex flex-wrap items-center gap-2">
               <span className="mr-2 inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-soft">
-                <Filter className="size-3.5" /> Decade:
+                <Filter className="size-3.5" aria-hidden="true" /> Decade:
               </span>
               {DECADES.map((decade) => {
                 const active = selectedDecade === decade
@@ -141,8 +141,11 @@ export function Exhibitions() {
                   <button
                     key={decade}
                     type="button"
+                    role="tab"
+                    aria-selected={active}
+                    aria-label={`Filter by decade: ${decade}`}
                     onClick={() => setSelectedDecade(decade)}
-                    className={`border-2 border-ink px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] transition-colors cursor-pointer ${
+                    className={`border-2 border-ink px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer ${
                       active ? 'bg-ink text-paper' : 'bg-paper-bright hover:bg-[#e7dcc6]'
                     }`}
                   >
@@ -152,7 +155,7 @@ export function Exhibitions() {
               })}
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div role="tablist" aria-label="Filter specimens by genre" className="flex flex-wrap items-center gap-2">
               <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-soft">
                 Genre:
               </span>
@@ -162,8 +165,11 @@ export function Exhibitions() {
                   <button
                     key={genre}
                     type="button"
+                    role="tab"
+                    aria-selected={active}
+                    aria-label={`Filter by genre: ${genre}`}
                     onClick={() => setSelectedGenre(genre)}
-                    className={`border-2 border-ink px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] transition-colors cursor-pointer ${
+                    className={`border-2 border-ink px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer ${
                       active ? 'bg-ink text-paper' : 'bg-paper-bright hover:bg-[#e7dcc6]'
                     }`}
                   >
@@ -173,7 +179,7 @@ export function Exhibitions() {
               })}
             </div>
 
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-ink-soft">
+            <p aria-live="polite" className="font-mono text-xs uppercase tracking-[0.18em] text-ink-soft">
               Showing {filteredMusicians.length} of {LEGENDARY_MUSICIANS.length} Specimens
             </p>
           </div>
