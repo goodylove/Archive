@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { ArrowRight, Tv, Volume2, VolumeX, Power } from 'lucide-react'
+import { ArrowRight, Tv, Volume2, VolumeX, Power, ChevronDown } from 'lucide-react'
 
 // YouTube video ID: M7rFzXUjsH0, starts at 10 seconds
 const YOUTUBE_VIDEO_ID = "F2epz22qOzM"
@@ -38,13 +38,65 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
   }, [])
 
   // Dismiss TV with vintage CRT shutdown effect
-  const handleEnterMuseum = () => {
+  const handleEnterMuseum = useCallback(() => {
     setIsExiting(true)
     onComplete?.()
     setTimeout(() => {
       setIsDismissed(true)
     }, 850)
-  }
+  }, [onComplete])
+
+  // Scroll down / Wheel / Touch swipe / Keyboard navigation to pass through the TV into the museum
+  useEffect(() => {
+    let touchStartY = 0
+
+    const handleWheel = (e: WheelEvent) => {
+      // Natural downward scroll gesture enters museum
+      if (e.deltaY > 20) {
+        handleEnterMuseum()
+      }
+    }
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY
+    }
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      const touchEndY = e.changedTouches[0].clientY
+      // Swiping up (scrolling down) enters museum
+      if (touchStartY - touchEndY > 35) {
+        handleEnterMuseum()
+      }
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === 'Escape' ||
+        e.key === 'Enter' ||
+        e.key === ' ' ||
+        e.key === 'ArrowDown' ||
+        e.key === 'PageDown'
+      ) {
+        if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+        e.preventDefault()
+        handleEnterMuseum()
+      } else if (e.key === 'm' || e.key === 'M') {
+        setIsMuted((m) => !m)
+      }
+    }
+
+    window.addEventListener('wheel', handleWheel, { passive: true })
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [handleEnterMuseum])
 
   const handleUnmute = () => {
     setIsMuted(false)
@@ -62,12 +114,22 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
       {!isDismissed && (
         <motion.div
           key="vintage-tv-stage"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Vintage Television Archival Gateway - 1960 Nigerian Broadcast"
           initial={{ opacity: 1 }}
           animate={{ opacity: isExiting ? 0 : 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: MECHANICAL_EASE }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#080706] px-4 py-5 sm:px-8 sm:py-7 select-none overflow-hidden text-[#F3ECDD] font-mono"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#080706] px-4 py-5 sm:px-8 sm:py-7 select-none overflow-y-auto text-[#F3ECDD] font-mono scroll-smooth"
         >
+          {/* Screen reader live announcement */}
+          <div className="sr-only" aria-live="polite" aria-atomic="true">
+            {screenPowered
+              ? 'Vintage CRT television receiver powered on. Broadcasting historical 1960 footage. Press Enter or scroll down to enter the museum.'
+              : 'Positioning vintage television receiver.'}
+          </div>
+
           {/* Background Ambient Dark Vignette & Paper Grain */}
           <div
             aria-hidden
@@ -81,7 +143,7 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
           {/* TOP BAR: Archival TV Metadata & Skip Control */}
           <header className="relative z-30 flex w-full max-w-5xl items-center justify-between border-b border-white/10 pb-3">
             <div className="flex items-center gap-3 text-[10px] sm:text-xs uppercase tracking-[0.22em] text-[#A69E8D]">
-              <Tv className="size-4 text-[#C82A2A] animate-pulse" />
+              <Tv className="size-4 text-[#C82A2A] animate-pulse" aria-hidden="true" />
               <span>NTA BROADCAST</span>
             </div>
 
@@ -89,20 +151,23 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
               <button
                 type="button"
                 onClick={() => setIsMuted((m) => !m)}
-                className="flex items-center gap-1.5 border border-white/20 bg-white/5 px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-[#D2C8B5] hover:border-[#F3ECDD] hover:text-[#F3ECDD] transition-colors cursor-pointer"
-                title={isMuted ? 'Unmute Sound' : 'Mute Sound'}
+                className="flex items-center gap-1.5 border border-white/20 bg-white/5 px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-[#D2C8B5] hover:border-[#F3ECDD] hover:text-[#F3ECDD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F3ECDD] focus-visible:ring-offset-2 focus-visible:ring-offset-[#080706] transition-colors cursor-pointer"
+                title={isMuted ? 'Unmute Sound (Press M)' : 'Mute Sound (Press M)'}
+                aria-label={isMuted ? 'Unmute television broadcast audio' : 'Mute television broadcast audio'}
+                aria-pressed={!isMuted}
               >
-                {isMuted ? <VolumeX className="size-3.5 text-[#C82A2A]" /> : <Volume2 className="size-3.5 text-[#4ade80]" />}
-                <span className="hidden sm:inline">{isMuted ? 'Sound Off' : 'Sound On'}</span>
+                {isMuted ? <VolumeX className="size-3.5 text-[#C82A2A]" aria-hidden="true" /> : <Volume2 className="size-3.5 text-[#4ade80]" aria-hidden="true" />}
+                <span className="hidden sm:inline">{isMuted ? 'Sound Off (M)' : 'Sound On (M)'}</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleEnterMuseum}
-                className="group flex items-center gap-2 border-2 border-[#F3ECDD] bg-[#F3ECDD] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#080706] transition-all hover:bg-transparent hover:text-[#F3ECDD] cursor-pointer shadow-[3px_3px_0_0_#C82A2A]"
+                className="group flex items-center gap-2 border-2 border-[#F3ECDD] bg-[#F3ECDD] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-[#080706] transition-all hover:bg-transparent hover:text-[#F3ECDD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F3ECDD] focus-visible:ring-offset-2 focus-visible:ring-offset-[#080706] cursor-pointer shadow-[3px_3px_0_0_#C82A2A]"
+                aria-label="Enter museum archive and explore vinyl turntable (Press Enter or Escape)"
               >
                 <span>Enter Archive</span>
-                <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </button>
             </div>
           </header>
@@ -110,7 +175,11 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
           {/* =========================================================================
               CENTER STAGE: THE ROTATING VINTAGE TELEVISION
               ========================================================================= */}
-          <main className="relative z-20 flex flex-1 w-full max-w-4xl items-center justify-center py-4">
+          <div
+            role="region"
+            aria-label="CRT Television Monitor"
+            className="relative z-20 flex flex-1 w-full max-w-4xl items-center justify-center py-4"
+          >
             <div className="relative flex w-full flex-col items-center">
               {/* THE TV CHASSIS WITH ROTATIONAL ENTRANCE ANIMATION */}
               <motion.div
@@ -193,9 +262,10 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
                             <button
                               type="button"
                               onClick={handleUnmute}
-                              className="group flex items-center gap-2 rounded border border-[#39FF14]/70 bg-black/85 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#39FF14] hover:bg-[#39FF14] hover:text-black transition-colors cursor-pointer shadow-[0_0_15px_rgba(57,255,20,0.3)]"
+                              aria-label="Unmute television broadcast audio"
+                              className="group flex items-center gap-2 rounded border border-[#39FF14]/70 bg-black/85 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#39FF14] hover:bg-[#39FF14] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#39FF14] transition-colors cursor-pointer shadow-[0_0_15px_rgba(57,255,20,0.3)]"
                             >
-                              <Volume2 className="size-3 animate-bounce" />
+                              <Volume2 className="size-3 animate-bounce" aria-hidden="true" />
                               <span>Click TV to Unmute Audio</span>
                             </button>
                           </div>
@@ -250,24 +320,38 @@ export function VintageTvGateway({ onComplete }: VintageTvGatewayProps) {
                   <button
                     type="button"
                     onClick={handleEnterMuseum}
-                    className="group inline-flex items-center gap-2 border-2 border-[#D4A373] bg-[#D4A373] px-6 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#080706] shadow-[4px_4px_0_0_#C82A2A] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_#C82A2A] active:translate-x-0 active:translate-y-0 active:shadow-none transition-all cursor-pointer"
+                    className="group inline-flex items-center gap-2 border-2 border-[#D4A373] bg-[#D4A373] px-6 py-2.5 font-mono text-xs font-bold uppercase tracking-[0.22em] text-[#080706] shadow-[4px_4px_0_0_#C82A2A] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_#C82A2A] active:translate-x-0 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A373] focus-visible:ring-offset-2 focus-visible:ring-offset-[#080706] transition-all cursor-pointer"
+                    aria-label="Proceed to Museum Platter (Press Enter or Space)"
                   >
                     <span>Proceed to Museum Platter</span>
-                    <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </button>
 
                   <button
                     type="button"
                     onClick={handleEnterMuseum}
-                    className="inline-flex items-center gap-1.5 border border-white/20 bg-white/5 px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] text-[#D2C8B5] hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 border border-white/20 bg-white/5 px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] text-[#D2C8B5] hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#080706] transition-colors cursor-pointer"
+                    aria-label="Turn off television and enter archive (Press Escape)"
                   >
-                    <Power className="size-3.5 text-[#C82A2A]" />
+                    <Power className="size-3.5 text-[#C82A2A]" aria-hidden="true" />
                     <span>Turn Off TV</span>
                   </button>
                 </div>
+
+                {/* Animated Scroll Down Indicator Prompt */}
+                <button
+                  type="button"
+                  onClick={handleEnterMuseum}
+                  className="mt-3 inline-flex items-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.22em] text-[#D4A373]/90 hover:text-[#D4A373] focus-visible:outline-none focus-visible:underline transition-colors cursor-pointer"
+                  aria-label="Scroll down or press Enter to visit the archive"
+                >
+                  <ChevronDown className="size-3.5 animate-bounce text-[#D4A373]" aria-hidden="true" />
+                  <span>Scroll down or press Enter to visit archive</span>
+                  <ChevronDown className="size-3.5 animate-bounce text-[#D4A373]" aria-hidden="true" />
+                </button>
               </div>
             </div>
-          </main>
+          </div>
 
           {/* BOTTOM TELEMETRY FOOTER */}
           <footer className="relative z-30 border-t border-white/10 pt-3 w-full max-w-5xl text-center text-[10px] uppercase tracking-[0.22em] text-[#8C806F]">

@@ -95,7 +95,7 @@ export function SonicIndex() {
     <section
       id="index"
       aria-labelledby="index-heading"
-      className="relative z-10 border-b-2 border-ink bg-paper py-16 sm:py-20 lg:py-24"
+      className="relative z-10 border-b-2 border-ink bg-paper py-16 sm:py-20 lg:py-24 scroll-mt-8"
     >
       <div className="mx-auto max-w-[2200px] px-5 sm:px-8 lg:px-12">
         {/* Registry Masthead */}
@@ -179,19 +179,21 @@ export function SonicIndex() {
         <div className="mt-8 flex flex-col gap-4 border-b-2 border-ink pb-6 lg:flex-row lg:items-center lg:justify-between">
           {/* Live Search Input */}
           <div className="relative flex-1 max-w-xl">
-            <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-ink-soft" />
+            <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-ink-soft" aria-hidden="true" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Search discographic ledger by pioneer, hit track, matrix code, or pressing plant"
               placeholder="Search by pioneer, track, matrix code, or plant..."
-              className="w-full border-2 border-ink bg-paper-bright py-2.5 pl-10 pr-4 font-mono text-xs uppercase tracking-[0.12em] text-ink placeholder:text-ink-soft/60 focus:bg-paper focus:outline-none focus:ring-2 focus:ring-ink"
+              className="w-full border-2 border-ink bg-paper-bright py-2.5 pl-10 pr-4 font-mono text-xs uppercase tracking-[0.12em] text-ink placeholder:text-ink-soft/60 focus:bg-paper focus:outline-none focus:ring-2 focus:ring-ink focus-visible:ring-2 focus-visible:ring-ink"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-soft hover:text-ink cursor-pointer"
+                aria-label="Clear search input"
+                className="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-soft hover:text-ink focus-visible:outline-none focus-visible:underline cursor-pointer"
               >
                 [Clear]
               </button>
@@ -200,7 +202,7 @@ export function SonicIndex() {
 
           {/* Decade Filters & Sorting Controls */}
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-1.5">
+            <div role="tablist" aria-label="Filter ledger by decade" className="flex items-center gap-1.5">
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft mr-1">
                 Decade:
               </span>
@@ -210,8 +212,11 @@ export function SonicIndex() {
                   <button
                     key={decade}
                     type="button"
+                    role="tab"
+                    aria-selected={active}
+                    aria-label={`Filter ledger by decade: ${decade}`}
                     onClick={() => setSelectedDecade(decade)}
-                    className={`border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors cursor-pointer ${
+                    className={`border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer ${
                       active ? 'bg-ink text-paper' : 'bg-paper-bright hover:bg-[#e7dcc6]'
                     }`}
                   >
@@ -221,17 +226,19 @@ export function SonicIndex() {
               })}
             </div>
 
-            <div className="h-6 w-[2px] bg-ink/30 hidden sm:block" />
+            <div className="h-6 w-[2px] bg-ink/30 hidden sm:block" aria-hidden="true" />
 
             {/* Quick Sort Options */}
-            <div className="flex items-center gap-1.5">
+            <div role="group" aria-label="Sort ledger records" className="flex items-center gap-1.5">
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft mr-1">
                 Sort:
               </span>
               <button
                 type="button"
                 onClick={() => toggleSort('year')}
-                className={`flex items-center gap-1 border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors cursor-pointer ${
+                aria-pressed={sortField === 'year'}
+                aria-label={`Sort by release year ${sortField === 'year' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : ''}`}
+                className={`flex items-center gap-1 border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer ${
                   sortField === 'year' ? 'bg-ink text-paper' : 'bg-paper-bright hover:bg-[#e7dcc6]'
                 }`}
               >
@@ -240,7 +247,9 @@ export function SonicIndex() {
               <button
                 type="button"
                 onClick={() => toggleSort('bpm')}
-                className={`flex items-center gap-1 border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors cursor-pointer ${
+                aria-pressed={sortField === 'bpm'}
+                aria-label={`Sort by tempo BPM ${sortField === 'bpm' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : ''}`}
+                className={`flex items-center gap-1 border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer ${
                   sortField === 'bpm' ? 'bg-ink text-paper' : 'bg-paper-bright hover:bg-[#e7dcc6]'
                 }`}
               >
@@ -249,7 +258,9 @@ export function SonicIndex() {
               <button
                 type="button"
                 onClick={() => toggleSort('name')}
-                className={`flex items-center gap-1 border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors cursor-pointer ${
+                aria-pressed={sortField === 'name'}
+                aria-label={`Sort by artist name ${sortField === 'name' ? (sortOrder === 'asc' ? 'ascending' : 'descending') : ''}`}
+                className={`flex items-center gap-1 border-2 border-ink px-2.5 py-1 font-mono text-xs uppercase tracking-[0.14em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink cursor-pointer ${
                   sortField === 'name' ? 'bg-ink text-paper' : 'bg-paper-bright hover:bg-[#e7dcc6]'
                 }`}
               >
